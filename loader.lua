@@ -1,1 +1,44 @@
-local v0=true;cheat.set_callback("paint",function() if (v0==true) then local v1=globals.place_id();local v2="https://raw.githubusercontent.com/Loscope/tralalerotralala/refs/heads/main/ids.json";if (v1==nil) then print("Why tf are u not in a game??.");elseif (v1~=nil) then http.get(v2,nil,function(v3) if v3 then local v4=json.parse(v3);if v4 then for v7,v8 in pairs(v4) do end local v5=tostring(v1);local v6=v4[v5];if v6 then http.get(v6,nil,function(v9) if v9 then local v10,v11=loadstring(v9);if v10 then v10();print("Script loaded successfully!");else end else end end);else print("Game not supported. ");end else end else end end);else end v0=false;end end);
+local one_time_only = true
+
+cheat.set_callback("paint", function()
+    if one_time_only == true then
+        local placeId_index = globals.place_id()
+        local mappingUrl = "https://raw.githubusercontent.com/Loscope/tralalerotralala/refs/heads/main/ids.json"
+        if placeId_index == nil then
+            print('Why tf are u not in a game??.')
+        else
+            if placeId_index ~= nil then
+                http.get(mappingUrl,nil, function(mappingResponse)
+                    if mappingResponse then
+                        local mapping = json.parse(mappingResponse)
+                        if mapping then
+                            for k, v in pairs(mapping) do
+                            end
+                            local placeId_str = tostring(placeId_index)
+                            local scriptUrl = mapping[placeId_str]
+                            if scriptUrl then
+                                http.get(scriptUrl,nil, function(script)
+                                    if script then
+                                        local func, err = loadstring(script)
+                                        if func then
+                                            func()
+                                            print("Script loaded successfully!")
+                                        else
+                                        end
+                                    else
+                                    end
+                                end)
+                            else
+                                print("Game not supported. ")
+                            end
+                        else
+                        end
+                    else
+                    end
+                end)
+            else
+            end
+        end
+        one_time_only = false
+    end
+end)
